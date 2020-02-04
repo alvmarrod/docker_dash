@@ -10,24 +10,6 @@ import (
     "github.com/gorilla/mux"
 )
 
-type DockerImage struct {
-    Repository string `json:"repository"`
-    TAG string `json:"tag"`
-    ID string `json:"id"`
-    Created string `json:"created"`
-    Size int64 `json:"size"`    // In Bytes
-}
-
-type DockerContainer struct {
-    Name string `json:"name"`
-    ID string `json:"id"`
-    Image DockerImage `json:"image"`
-    CMD string `json:"cmd"`
-    Created string `json:"created"`
-    Status string `json:"status"`
-    Ports [] int `json:"ports"`
-}
-
 /* Log */
 
 type debugLevel int
@@ -45,6 +27,31 @@ func writeLog(msg string, level debugLevel){
     if (level >= DEBUG_LEVEL){
         fmt.Printf("%s - %s\n", time.Now().Format(time.RFC850), msg)
     }
+}
+
+/* Application side */
+
+type lddOperationResponse struct {
+    Status string `json:"status"`
+    Message string `json:"msg"`
+}
+
+type DockerImage struct {
+    Repository string `json:"repository"`
+    TAG string `json:"tag"`
+    ID string `json:"id"`
+    Created string `json:"created"`
+    Size int64 `json:"size"`    // In Bytes
+}
+
+type DockerContainer struct {
+    Name string `json:"name"`
+    ID string `json:"id"`
+    Image DockerImage `json:"image"`
+    CMD string `json:"cmd"`
+    Created string `json:"created"`
+    Status string `json:"status"`
+    Ports [] int `json:"ports"`
 }
 
 var images []DockerImage
@@ -93,10 +100,19 @@ func getContainer(w http.ResponseWriter, r *http.Request) {
 func createDockerImage(w http.ResponseWriter, r *http.Request) {
     w.Header().Set("Content-Type", "application/json")
     var image DockerImage
-    _ = json.NewDecoder(r.Body).Decode(image)
-    image.ID = strconv.Itoa(rand.Intn(1000000))
-    images = append(images, image)
-    json.NewEncoder(w).Encode(&image)
+    err := json.NewDecoder(r.Body).Decode(&image)
+
+    if (err == nil) {
+        images = append(images, image)
+        // json.NewEncoder(w).Encode(&image)
+        lddOperationResponse := lddOperationResponse{ Status: "OK", Message: "Image added" }
+        json.NewEncoder(w).Encode(&lddOperationResponse)
+    } else {
+        fmt.Printf("Error! %s\n", err) // has to be changed for callback to log!
+        lddOperationResponse := lddOperationResponse{ Status: "ERROR", Message: "Image not added due to an error!"}
+        json.NewEncoder(w).Encode(&lddOperationResponse)
+    }
+    
 }
 
 func createDockerContainer(w http.ResponseWriter, r *http.Request) {
