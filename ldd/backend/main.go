@@ -3,9 +3,9 @@ package main
 import (
     "fmt"
     "time"
-    "strconv"
+    // "strconv"
     "net/http"
-    "math/rand"
+    // "math/rand"
     "encoding/json"
     "github.com/gorilla/mux"
 )
@@ -101,27 +101,36 @@ func createDockerImage(w http.ResponseWriter, r *http.Request) {
     w.Header().Set("Content-Type", "application/json")
     var image DockerImage
     err := json.NewDecoder(r.Body).Decode(&image)
+    answer := lddOperationResponse{ Status: "OK", Message: "Image added" }
 
     if (err == nil) {
         images = append(images, image)
         // json.NewEncoder(w).Encode(&image)
-        lddOperationResponse := lddOperationResponse{ Status: "OK", Message: "Image added" }
-        json.NewEncoder(w).Encode(&lddOperationResponse)
     } else {
         fmt.Printf("Error! %s\n", err) // has to be changed for callback to log!
-        lddOperationResponse := lddOperationResponse{ Status: "ERROR", Message: "Image not added due to an error!"}
-        json.NewEncoder(w).Encode(&lddOperationResponse)
+        answer = lddOperationResponse{ Status: "ERROR", Message: "Image not added due to an error!"}
     }
+
+    json.NewEncoder(w).Encode(&answer)
     
 }
 
 func createDockerContainer(w http.ResponseWriter, r *http.Request) {
     w.Header().Set("Content-Type", "application/json")
     var container DockerContainer
-    _ = json.NewDecoder(r.Body).Decode(container)
-    container.ID = strconv.Itoa(rand.Intn(1000000))
-    containers = append(containers, container)
-    json.NewEncoder(w).Encode(&container)
+    err := json.NewDecoder(r.Body).Decode(&container)
+    answer := lddOperationResponse{ Status: "OK", Message: "Container created" }
+
+    if (err == nil) {
+        containers = append(containers, container)
+        // json.NewEncoder(w).Encode(&container)
+    } else {
+        fmt.Printf("Error! %s\n", err) // has to be changed for callback to log!
+        answer = lddOperationResponse{ Status: "ERROR", Message: "Container not created due to an error!"}
+    }
+
+    json.NewEncoder(w).Encode(&answer)
+
 }
 
 /* Update Item - Execute action over it */
@@ -162,25 +171,37 @@ func updateContainer(w http.ResponseWriter, r *http.Request) {
 func deleteImage(w http.ResponseWriter, r *http.Request) {
     w.Header().Set("Content-Type", "application/json")
     params := mux.Vars(r)
+    answer := lddOperationResponse{ Status: "ERROR", Message: "Image was not removed!"}
+
     for index, item := range images {
       if item.ID == params["id"] {
         images = append(images[:index], images[index+1:]...)
+        answer = lddOperationResponse{ Status: "OK", Message: "Image was removed!"}    
         break
       }
     }
-    json.NewEncoder(w).Encode(images)
+
+    // json.NewEncoder(w).Encode(images)
+    json.NewEncoder(w).Encode(answer)
+
 }
 
 func deleteContainer(w http.ResponseWriter, r *http.Request) {
     w.Header().Set("Content-Type", "application/json")
     params := mux.Vars(r)
+    answer := lddOperationResponse{ Status: "ERROR", Message: "Container was not removed!"}
+
     for index, item := range containers {
       if item.ID == params["id"] {
         containers = append(containers[:index], containers[index+1:]...)
+        answer = lddOperationResponse{ Status: "OK", Message: "Container was removed!"}    
         break
       }
     }
-    json.NewEncoder(w).Encode(containers)
+
+    // json.NewEncoder(w).Encode(containers)
+    json.NewEncoder(w).Encode(answer)
+
 }
 
 func main() {
