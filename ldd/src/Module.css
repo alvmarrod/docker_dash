@@ -1,0 +1,61 @@
+table, th, td {
+    border: 1px solid;
+    border-color: white;
+    border-collapse: collapse;
+}
+
+.Table-Wrapper {
+    overflow: auto;
+}
+
+.Table-header {
+    font-size: 2vmin;
+    text-align: center;
+}
+
+.Table-header th {
+    padding: 0.5vmin;
+    padding-left: 2vmin;
+    padding-right: 2vmin;
+}
+
+.Regular-Row {
+    font-size: calc(2vmin - 5px);
+}
+
+.Regular-Row th {
+    padding: 0.3vmin;
+    text-align: center;
+}
+
+.RunningContainers-Module {
+  text-align: left;
+}
+
+.Module-logo {
+  height: 3vmin;
+  pointer-events: none;
+  vertical-align: middle;
+}
+
+.Module-title {
+    font-size: 3vmin;
+}
+
+.Module-header {
+  background-color: #282c34;
+  min-height: 5vh;
+  max-height: 25vh;
+  min-width: 80vw;
+  max-width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Make it start from the top */
+  justify-content: middle;
+  color: white;
+}
+
+.link {
+  color: #61dafb;
+}
