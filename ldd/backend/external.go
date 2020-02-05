@@ -8,6 +8,9 @@ import (
 
 /* External Invocation Functions */
 
+// runOnHost takes a command as input and executes it, returning its output
+// Arguments are considered based on spaces.
+// Returns "Error" string on execution failure
 func runOnHost(cmd string) string {
 
     parts := strings.Fields(cmd)
@@ -27,6 +30,9 @@ func runOnHost(cmd string) string {
 
 }
 
+// queryDockerOnHost takes a command as input and executes it, returning its output
+// Arguments are keywords to specify what should be executed, NOT real commands
+// Returns "Error" string on execution failure
 func queryDockerOnHost(cmd []string) string {
 
     app := "docker"
