@@ -5,7 +5,7 @@ import (
     "fmt"
     "time"
     "strings"
-    // "strconv"
+    "strconv"
     "os/exec"
     "net/http"
     // "math/rand"
@@ -49,6 +49,10 @@ func runOnHost(cmd string) string {
     if args[0] == "image" && args[1] == "ls" {
         args = append(args, "--format")
         args = append(args, `{{.Repository}}\t{{.Tag}}\t{{.ID}}\t{{.CreatedAt}}\t{{.Size}}`)
+    } else if (args[0] == "container" && args[1] == "ls") {
+        // docker container ls --format '{{json .}}'
+        args = append(args, "--format")
+        args = append(args, `{{.Names}}\t{{.ID}}\t{{.Image}}\t{{.Command}}\t{{.CreatedAt}}\t{{.Status}}\t{{.Ports}}`)
     }
 
     out, err := exec.Command(app, args...).Output()
@@ -99,6 +103,79 @@ func parseDockerImages(data string) {
 
 func parseDockerContainers(data string) {
 
+    lines := strings.Split(data, "\n")
+
+    // Remove previous data
+    containers = nil
+
+    // Line Format (split by \t)
+    // Repository Tag Id Created Size
+    for i:=0; i < len(lines) && len(lines[i]) > 0; i++ {
+        
+        piece := strings.Split(lines[i], "\t")
+
+        // logEvent("Line " + string(i) + " = " + lines[i], Critical)
+        // for j:=0; j < len(piece); j++ {
+        //     logEvent("\t" + piece[j], Critical)
+        // }
+        // logEvent(lines[i], Critical)
+        
+        // Add new item to array
+        var container DockerContainer
+        container.Name = piece[0]
+        container.ID = piece[1]
+        container.CMD = piece[3]
+        container.Created = piece[4] // strconv.ParseInt(, 10, 64)
+        container.Status = piece[5]
+
+        // If it is NOT found by ID, means it came with a name
+        img := getImageByID(piece[2])
+        name := ""
+        if img == nil {
+            name = piece[2]
+        } else {
+            name = (*img).ID
+        }
+        container.Image = name
+
+        // Ports need to be parsed as a list
+        container.Ports = strListToIntList(strings.Split(piece[6], " "))
+
+        containers = append(containers, container)
+
+    }
+
+}
+
+func getImageByID(pID string) *DockerImage {
+
+    var imagen *DockerImage = nil
+    
+    for _, element := range images {
+
+        if element.ID == pID {
+            imagen = &element
+            break
+        }
+
+    }
+
+    return imagen
+
+}
+
+/* General functions */
+func strListToIntList(list []string) []int {
+
+    var result []int
+
+    for _, element := range list {
+        i, _ := strconv.Atoi(element)
+        result = append(result, i)
+    }
+
+    return result
+
 }
 
 /* Enable Cors */
@@ -125,7 +202,7 @@ type DockerImage struct {
 type DockerContainer struct {
     Name string `json:"name"`
     ID string `json:"id"`
-    Image DockerImage `json:"image"`
+    Image string `json:"image"`
     CMD string `json:"cmd"`
     Created string `json:"created"`
     Status string `json:"status"`
