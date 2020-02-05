@@ -47,16 +47,6 @@ class RunningContainers extends React.Component {
                 </tr>
               </thead>
               <tbody>
-                <tr className="Regular-Row">
-                  <th>Col Data 1</th>
-                  <th>Col Data 2</th>
-                  <th>Col Data 3</th>
-                  <th>Col Data 4</th>
-                  <th>Col Data 5</th>
-                  <th>Col Data 6</th>
-                  <th>Col Data 7</th>
-                  <th><Button title="Stop" /></th>
-                </tr>
                 {this.renderContainers()}
               </tbody>
             </table>
