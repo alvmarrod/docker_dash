@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from './Button';
 
 class DockerContainer extends React.Component{
 
@@ -13,7 +14,7 @@ class DockerContainer extends React.Component{
                 <th>{this.props.container.created}</th>
                 <th>{this.props.container.status}</th>
                 <th>{this.props.container.ports}</th>
-                <th>Appropriate button</th>
+                <th><Button title={this.props.button["title"]} className={this.props.button["className"]}/></th>
             </tr>
         )
 

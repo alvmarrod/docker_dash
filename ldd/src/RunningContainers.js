@@ -13,7 +13,8 @@ class RunningContainers extends React.Component {
 
     if (this.props.containers != null) {
       DockerContainers = this.props.containers.map((val, index) => {
-        return <DockerContainer key={"RunningDockerContainer_" + index} container={val} />
+        const buttonTemplate = {className: "Stop", title: "Stop"};
+        return <DockerContainer key={"RunningDockerContainer_" + index} container={val} button={buttonTemplate} />
       });
     }
 

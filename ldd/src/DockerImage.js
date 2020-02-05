@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from './Button';
 
 class DockerImage extends React.Component{
 
@@ -11,6 +12,7 @@ class DockerImage extends React.Component{
                 <th>{this.props.image.id}</th>
                 <th>{this.props.image.created}</th>
                 <th>{this.props.image.size}</th>
+                <th><Button title="Run" className="Run" /></th>
             </tr>
         )
 

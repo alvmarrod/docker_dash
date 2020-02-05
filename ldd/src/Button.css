@@ -1,35 +1,63 @@
 button {
 
-    font-family: 'Oxygen', sans-serif;
-    color: whitesmoke;
-    font-size: 1.3vmin;
-    
-    border-radius: 8px;
-    padding: 0.3vmin;
-    padding-left: 1vmin;
-    padding-right: 1vmin;
+  font-family: 'Oxygen', sans-serif;
+  color: whitesmoke;
+  font-size: 1.3vmin;
+  
+  border-radius: 8px;
+  padding: 0.3vmin;
+  padding-left: 1vmin;
+  padding-right: 1vmin;
 
-    background-color: #F4595B;
-    border-color: #F4595B;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
 
-    display: inline-block;
-    text-align: center;
-    text-decoration: none;
-
-    -webkit-transition-duration: 0.1s; /* Safari */
-    transition-duration: 0.1s;
+  -webkit-transition-duration: 0.1s; /* Safari */
+  transition-duration: 0.1s;
 
 }
 
-button:hover {
-    background-color: #FF7375;
-    border-bottom: 2px solid #C24648;
+button.Stop {
+
+  background-color: #F4595B;
+  border-color: #F4595B;
+
 }
 
-button:active {
+button:hover.Stop {
+
+  background-color: #FF7375;
+  border-bottom: 2px solid #C24648;
+
+}
+
+button:active.Stop {
 
   background-color: #C24648;
   border-bottom: 2px solid #C24648;
+  color: #CCC;
+
+}
+
+button.Run {
+
+  background-color: #40a142;
+  border-color: #40a142;
+
+}
+
+button:hover.Run {
+
+  background-color: #42ad44;
+  border-bottom: 2px solid #40a142;
+  
+}
+
+button:active.Run {
+
+  background-color: #40a142;
+  border-bottom: 2px solid #40a142;
   color: #CCC;
 
 }

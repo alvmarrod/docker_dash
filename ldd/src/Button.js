@@ -26,7 +26,7 @@ class Button extends React.Component{
     render(){
 
         return (
-            <button onClick={this.launchFunction}>
+            <button className={this.props.className} onClick={this.launchFunction}>
                 {this.props.title.toUpperCase()}
             </button>
         );

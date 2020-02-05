@@ -26,16 +26,23 @@ class ExistingImages extends React.Component{
             Existing Images
           </span>
           <br/>
-          <table>
-            <tr className="Table-header">
-              <th>Repository</th>
-              <th>TAG</th>
-              <th>Image ID</th>
-              <th>Created</th>
-              <th>Size</th>
-            </tr>
-            {this.renderImages()}
-          </table>
+          <div className="Table-Wrapper">
+            <table>
+              <thead>
+                <tr className="Table-header">
+                  <th>Repository</th>
+                  <th>TAG</th>
+                  <th>Image ID</th>
+                  <th>Created</th>
+                  <th>Size</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.renderImages()}
+              </tbody>
+            </table>
+          </div>
         </header>
       </div>
     );
