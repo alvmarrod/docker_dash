@@ -29,7 +29,7 @@ class RunningContainers extends React.Component {
           <span className="Module-title">
             <img src={docker_logo} className="Module-logo" alt="logo" />
             Running Containers
-              </span>
+          </span>
           <br />
           <div className="Table-Wrapper">
             <table>
