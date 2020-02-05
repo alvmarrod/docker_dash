@@ -45,15 +45,59 @@ func runOnHost(cmd string) string {
     app := parts[0]
     args := parts[1:len(parts)]
 
-    // Add format settings after Fields command
-    if args[0] == "image" && args[1] == "ls" {
+    out, err := exec.Command(app, args...).Output()
+    // logDetail(string(out), Critical)
+
+    if (err != nil) {
+        logEvent("Error", Critical)
+        log.Fatal(err)
+        out = []byte("Error")
+    }
+
+    return string(out)
+
+}
+
+func queryDockerOnHost(cmd []string) string {
+
+    app := "docker"
+    var args []string
+
+    // Create command based on input
+    // docker container ls --format '{{json .}}'
+    if (cmd[0] == "image") && (cmd[1] == "list") {
+        args = append(args, "image")
+        args = append(args, "ls")
         args = append(args, "--format")
         args = append(args, `{{.Repository}}\t{{.Tag}}\t{{.ID}}\t{{.CreatedAt}}\t{{.Size}}`)
-    } else if (args[0] == "container" && args[1] == "ls") {
-        // docker container ls --format '{{json .}}'
+
+    } else if (cmd[0] == "container" && cmd[1] == "list") {
+        args = append(args, "container")
+        args = append(args, "ls")
         args = append(args, "--format")
-        args = append(args, `{{.Names}}\t{{.ID}}\t{{.Image}}\t{{.Command}}\t{{.CreatedAt}}\t{{.Status}}\t{{.Ports}}`)
+        args = append(args, `"{{.Names}}\t{{.ID}}\t{{.Image}}\t{{.Command}}\t{{.CreatedAt}}\t{{.Status}}\t{{.Ports}}"`)
+
+        if cmd[2] == "active" {
+            args = append(args, "--filter")
+            args = append(args, `status=created`)
+            args = append(args, "--filter")
+            args = append(args, `status=restarting`)
+            args = append(args, "--filter")
+            args = append(args, `status=running`)
+        } else {
+            args = append(args, "--filter")
+            args = append(args, `status=paused`)
+            args = append(args, "--filter")
+            args = append(args, `status=exited`)
+            args = append(args, "--filter")
+            args = append(args, `status=dead`)
+            args = append(args, "--filter")
+            args = append(args, `status=removing`)
+        }
+        
     }
+
+    logEvent(strings.Join(args, " || "), Critical)
 
     out, err := exec.Command(app, args...).Output()
     // logDetail(string(out), Critical)
@@ -216,7 +260,7 @@ var containers []DockerContainer
 
 func reqGetDockerImages(w http.ResponseWriter, r *http.Request) {
     // Update images availables
-    output := runOnHost("docker image ls")
+    output := queryDockerOnHost([]string {"image", "list"})
     parseDockerImages(output)
 
     // Send response
@@ -225,9 +269,20 @@ func reqGetDockerImages(w http.ResponseWriter, r *http.Request) {
     json.NewEncoder(w).Encode(images)
 }
 
-func reqGetDockerContainers(w http.ResponseWriter, r *http.Request) {
+func reqGetRunningDockerContainers(w http.ResponseWriter, r *http.Request) {
     // Update images availables
-    output := runOnHost("docker container ls")
+    output := queryDockerOnHost([]string{"container", "list", "active"})
+    parseDockerContainers(output)
+
+    // Send response
+    w.Header().Set("Content-Type", "application/json")
+    enableCors(&w)
+    json.NewEncoder(w).Encode(containers)
+}
+
+func reqGetStoppedDockerContainers(w http.ResponseWriter, r *http.Request) {
+    // Update images availables
+    output := queryDockerOnHost([]string{"container", "list", "stopped"})
     parseDockerContainers(output)
 
     // Send response
@@ -400,16 +455,12 @@ func reqDeleteContainer(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 
-    images = append(images, DockerImage{Repository: "prueba/imagen1", TAG: "23984723894723984", ID: "1", Created: "25/01/2020", Size: "255KB"})
-    images = append(images, DockerImage{Repository: "prueba/imagen2", TAG: "23984723894723984", ID: "2", Created: "25/01/2020", Size: "255KB"})
-    images = append(images, DockerImage{Repository: "prueba/imagen3", TAG: "23984723894723984", ID: "3", Created: "25/01/2020", Size: "255KB"})
-    images = append(images, DockerImage{Repository: "prueba/imagen4", TAG: "23984723894723984", ID: "4", Created: "25/01/2020", Size: "255KB"})
-
     router := mux.NewRouter()
 
     /* Get complete list of items */
     router.HandleFunc("/images", reqGetDockerImages).Methods("GET")
-    router.HandleFunc("/containers", reqGetDockerContainers).Methods("GET")
+    router.HandleFunc("/stoppedcontainers", reqGetStoppedDockerContainers).Methods("GET")
+    router.HandleFunc("/runningcontainers", reqGetRunningDockerContainers).Methods("GET")
 
     /* Get specific item */
     router.HandleFunc("/images/{id}", reqGetImage).Methods("GET")
