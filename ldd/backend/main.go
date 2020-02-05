@@ -75,7 +75,7 @@ func queryDockerOnHost(cmd []string) string {
         args = append(args, "container")
         args = append(args, "ls")
         args = append(args, "--format")
-        args = append(args, `"{{.Names}}\t{{.ID}}\t{{.Image}}\t{{.Command}}\t{{.CreatedAt}}\t{{.Status}}\t{{.Ports}}"`)
+        args = append(args, `{{.Names}}\t{{.ID}}\t{{.Image}}\t{{.Command}}\t{{.CreatedAt}}\t{{.Status}}\t{{.Ports}}`)
 
         if cmd[2] == "active" {
             args = append(args, "--filter")
