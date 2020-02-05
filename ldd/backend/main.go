@@ -2,25 +2,10 @@ package main
 
 import (
     "fmt"
-    "strconv"
     "net/http"
     "encoding/json"
     "github.com/gorilla/mux"
 )
-
-/* General functions */
-func strListToIntList(list []string) []int {
-
-    var result []int
-
-    for _, element := range list {
-        i, _ := strconv.Atoi(element)
-        result = append(result, i)
-    }
-
-    return result
-
-}
 
 /* Enable Cors */
 // Should disable on production
