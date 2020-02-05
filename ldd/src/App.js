@@ -6,25 +6,41 @@ import StoppedContainers from './StoppedContainers';
 import ExistingImages from './ExistingImages';
 import Others from './Others';
 
-function App(){
+class App extends React.Component{
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <span className="Dashboard-title">
-          <img src={logo} className="React-logo" alt="logo" />
-          Local Docker Dashboard
-        </span>
-        <RunningContainers/>
-        <br/>
-        <StoppedContainers/>
-        <br/>
-        <ExistingImages/>
-        <br/>
-        <Others/>
-      </header>
-    </div>
-  );
+  state = {
+    images: [],
+    containers: []
+  }
+  
+  componentDidMount() {
+    fetch('http://172.17.0.3:8000/images')
+    .then(res => res.json())
+    .then((data) => {
+      this.setState({ images: data })
+    })
+    .catch(console.log)
+  }
+
+  render () {
+    return(
+      <div className="App">
+        <header className="App-header">
+          <span className="Dashboard-title">
+            <img src={logo} className="React-logo" alt="logo" />
+            Local Docker Dashboard
+          </span>
+          <RunningContainers/>
+          <br/>
+          <StoppedContainers/>
+          <br/>
+          <ExistingImages images={this.state.images} />
+          <br/>
+          <Others/>
+        </header>
+      </div>
+    );
+  }
 
 }
 
