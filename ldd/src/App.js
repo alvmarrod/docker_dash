@@ -10,7 +10,8 @@ class App extends React.Component{
 
   state = {
     images: [],
-    runningcontainers: []
+    runningcontainers: [],
+    stoppedcontainers: []
   }
   
   componentDidMount() {
@@ -23,10 +24,17 @@ class App extends React.Component{
     })
     .catch(console.log)
 
-    fetch('http://10.20.30.54:8000/containers')
+    fetch('http://10.20.30.54:8000/runningcontainers')
     .then(res => res.json())
     .then((data) => {
       this.setState({ runningcontainers: data })
+    })
+    .catch(console.log)
+
+    fetch('http://10.20.30.54:8000/stoppedcontainers')
+    .then(res => res.json())
+    .then((data) => {
+      this.setState({ stoppedcontainers: data })
     })
     .catch(console.log)
 
@@ -42,7 +50,7 @@ class App extends React.Component{
           </span>
           <RunningContainers containers={this.state.runningcontainers}/>
           <br/>
-          <StoppedContainers/>
+          <StoppedContainers containers={this.state.stoppedcontainers}/>
           <br/>
           <ExistingImages images={this.state.images} />
           <br/>
