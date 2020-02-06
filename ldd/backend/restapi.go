@@ -16,10 +16,32 @@ type DockerContainerAction struct {
 
 /* Cors - Should disable on production*/
 func enableCors(w *http.ResponseWriter) {
-	(*w).Header().Set("Access-Control-Allow-Origin", "*")
+	(*w).Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
+	(*w).Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+	(*w).Header().Set("Access-Control-Allow-Headers", "Origin, Content-Type, X-Auth-Token, Authorization, Accept, token")
+	(*w).Header().Set("Access-Control-Allow-Credentials", "true")
+}
+
+func corsMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+
+		logEvent("Middleware - "+r.Method+" Processed", Debug)
+
+		enableCors(&w)
+		if r.Method == "OPTIONS" {
+			// enableCors(&w)
+			w.Header().Set("Content-Type", "application/json")
+			return // This return is the one who avoids the preflight error to trigger
+		}
+
+		next.ServeHTTP(w, r)
+
+	})
+
 }
 
 /* Request handler functions */
+
 /* Get complete list of items */
 func reqGetDockerImages(w http.ResponseWriter, r *http.Request) {
 	// Update images availables
@@ -151,8 +173,10 @@ func reqUpdateImage(w http.ResponseWriter, r *http.Request) {
 
 // reqUpdateContainer Receives a Docker Container update and triggers it
 func reqUpdateContainer(w http.ResponseWriter, r *http.Request) {
+
 	w.Header().Set("Content-Type", "application/json")
 	enableCors(&w)
+
 	// params := mux.Vars(r)
 	answer := lddOperationResponse{Status: "ERROR", Message: "Container not updated!"}
 
@@ -180,6 +204,7 @@ func reqUpdateContainer(w http.ResponseWriter, r *http.Request) {
 	// 	}
 	// }
 
+	// Answer back
 	json.NewEncoder(w).Encode(answer)
 
 }
@@ -248,6 +273,7 @@ func runAPI() {
 	router.HandleFunc("/containers/{id}", reqDeleteContainer).Methods("DELETE")
 
 	logEvent("Listening", Info)
-	http.ListenAndServe(":8000", router)
+	http.ListenAndServe(":8000", corsMiddleware(router))
+	// http.ListenAndServe(":8000", router)
 
 }

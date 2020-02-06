@@ -71,7 +71,11 @@ func queryDockerOnHost(cmd []string) string {
 		}
 
 	} else if cmd[0] == "container" && cmd[1] == "Start" {
-
+		args = append(args, cmd[0])
+		args = append(args, "ls")
+		// args = append(args, cmd[1])
+		// args = append(args, cmd[2])
+		logEvent("Execution in a second: ", Critical)
 	}
 
 	logEvent(strings.Join(args, " || "), Critical)

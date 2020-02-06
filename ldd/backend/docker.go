@@ -159,6 +159,7 @@ func executeContainerAction(pContainer string, pAction string) string {
 	//     cmd = append(cmd, "")
 	// }
 
+	logEvent("Executing query!", Critical)
 	output := queryDockerOnHost(cmd)
 
 	return output
