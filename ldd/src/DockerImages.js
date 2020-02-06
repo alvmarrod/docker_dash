@@ -1,10 +1,27 @@
 import React from 'react';
+import Switch from "react-switch";
 import DockerImage from './DockerImage';
 
 import './Module.css';
 import docker_logo from './Moby-logo.png';
 
 class DockerImages extends React.Component{
+
+  constructor(props) {
+
+    super(props);
+
+    this.state = { 
+      checked: true
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+
+  }
+
+  handleChange(checked) {
+    this.setState({ checked });
+  }
       
   renderImages(){
 
@@ -18,6 +35,11 @@ class DockerImages extends React.Component{
 
   render(){
 
+    const switchStyle = {
+      width: 35,
+      height: 20
+    };
+
     return (
       <div className="Module">
         <header className="Module-header">
@@ -26,6 +48,17 @@ class DockerImages extends React.Component{
             Existing Images
           </span>
           <br/>
+        </header>
+        <div className="Module-body">
+          <div className="Option">
+              <span>
+                Show images without name &nbsp;
+                <Switch onChange={this.handleChange}
+                        checked={this.state.checked}
+                        width={switchStyle.width}
+                        height={switchStyle.height}/>
+              </span>
+            </div>
           <div className="Table-Wrapper">
             <table>
               <thead>
@@ -43,7 +76,7 @@ class DockerImages extends React.Component{
               </tbody>
             </table>
           </div>
-        </header>
+        </div>
       </div>
     );
 

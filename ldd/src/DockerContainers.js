@@ -48,6 +48,11 @@ class DockerContainers extends React.Component {
 
   render() {
 
+    const switchStyle = {
+      width: 35,
+      height: 20
+    };
+
     return (
       <div className="Module">
         <header className="Module-header">
@@ -56,10 +61,17 @@ class DockerContainers extends React.Component {
             {this.props.title} Containers
           </span>
           <br />
-          <span>
-            <span>Show containers without name</span>
-            <Switch onChange={this.handleChange} checked={this.state.checked} />
-          </span>
+        </header>
+        <div className="Module-body">
+          <div className="Option">
+            <span>
+              Show containers without name &nbsp;
+              <Switch onChange={this.handleChange}
+                      checked={this.state.checked}
+                      width={switchStyle.width}
+                      height={switchStyle.height}/>
+            </span>
+          </div>
           <div className="Table-Wrapper">
             <table>
               <thead>
@@ -79,7 +91,7 @@ class DockerContainers extends React.Component {
               </tbody>
             </table>
           </div>
-        </header>
+        </div>
       </div>
     );
 
