@@ -6,6 +6,19 @@ import docker_logo from './Moby-logo.png';
 
 class DockerContainers extends React.Component {
 
+  constructor(props){
+    super(props);
+    this.state = { time: Date.now() };
+  }
+
+  componentDidMount() {
+    this.interval = setInterval(() => this.setState({ time: Date.now() }), 1000 * 5);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
   renderContainers() {
 
     var DockerContainersInstances = [];
