@@ -7,9 +7,9 @@ class DockerContainer extends React.Component{
 
         var query = "";
 
-        if (this.props.button["title"] == "Stop") {
+        if (this.props.button["title"] === "Stop") {
             query = "StopContainer";            
-        } else if (this.props.button["title"] == "Start") {
+        } else if (this.props.button["title"] === "Start") {
             query = "StartContainer";
         } else {
             console.log("Error, unknown button title: " + this.props.button["title"]);
@@ -31,7 +31,8 @@ class DockerContainer extends React.Component{
                 <th>{this.props.container.ports}</th>
                 <th><Button title={this.props.button["title"]}
                             className={this.props.button["className"]}
-                            apiQuery={this.apiQueryForButton()} /></th>
+                            apiQuery={this.apiQueryForButton()}
+                            itemID={this.props.container.id} /></th>
             </tr>
         )
 
