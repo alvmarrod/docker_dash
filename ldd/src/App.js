@@ -8,13 +8,21 @@ import DockerContainers from './DockerContainers';
 
 class App extends React.Component{
 
-  state = {
-    images: [],
-    runningcontainers: [],
-    stoppedcontainers: []
+  intervalID;
+
+  constructor(props){
+    super(props);
+
+    this.state = {
+      images: [],
+      runningcontainers: [],
+      stoppedcontainers: []
+    };
+
   }
-  
-  componentDidMount() {
+
+  fetchAllData() {
+
     // fetch('http://172.17.0.3:8000/images')
     // fetch('http://172.17.0.1:8000/images')
     fetch('http://10.20.30.54:8000/images')
@@ -38,6 +46,23 @@ class App extends React.Component{
     })
     .catch(console.log)
 
+  }
+
+  componentDidMount() {
+    // First data fetch to populate the interface
+    this.fetchAllData()
+    
+    /*
+      Now we need to make it run at a specified interval,
+      bind the getData() call to `this`, and keep a reference
+      to the invterval so we can clear it later.
+    */
+    this.intervalID = setInterval(this.fetchAllData.bind(this), 1000*5);
+  }
+
+  componentWillUnmount() {
+    // stop fetchAllData() from continuing to run even after unmounting this component
+    clearInterval(this.intervalID);
   }
 
   render () {
