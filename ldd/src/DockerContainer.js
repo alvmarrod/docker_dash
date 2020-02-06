@@ -3,6 +3,21 @@ import Button from './Button';
 
 class DockerContainer extends React.Component{
 
+    apiQueryForButton(){
+
+        var query = "";
+
+        if (this.props.button["title"] == "Stop") {
+            query = "StopContainer";            
+        } else if (this.props.button["title"] == "Start") {
+            query = "StartContainer";
+        } else {
+            console.log("Error, unknown button title: " + this.props.button["title"]);
+        }
+
+        return query;
+    }
+
     render(){
 
         return (
@@ -14,7 +29,9 @@ class DockerContainer extends React.Component{
                 <th>{this.props.container.created}</th>
                 <th>{this.props.container.status}</th>
                 <th>{this.props.container.ports}</th>
-                <th><Button title={this.props.button["title"]} className={this.props.button["className"]}/></th>
+                <th><Button title={this.props.button["title"]}
+                            className={this.props.button["className"]}
+                            apiQuery={this.apiQueryForButton()} /></th>
             </tr>
         )
 

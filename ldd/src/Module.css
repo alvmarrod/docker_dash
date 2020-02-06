@@ -1,3 +1,4 @@
+/* Tables */
 table, th, td {
     border: 1px solid;
     border-color: white;
@@ -28,6 +29,7 @@ table, th, td {
     text-align: center;
 }
 
+/* Modules */
 .RunningContainers-Module {
   text-align: left;
 }
@@ -56,6 +58,12 @@ table, th, td {
   color: white;
 }
 
+/* Basic elements */
+
 .link {
   color: #61dafb;
+}
+
+p {
+  font-size: calc(2vmin - 5px);
 }

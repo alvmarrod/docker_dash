@@ -1,6 +1,7 @@
 import React from 'react';
-import docker_logo from './Moby-logo.png';
+
 import './Module.css';
+import docker_logo from './Moby-logo.png';
 
 class Others extends React.Component{
 

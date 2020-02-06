@@ -16,7 +16,7 @@ class DockerContainers extends React.Component {
 
         const buttonTemplate = { className: "Stop", title: "Stop" };
         if (this.props.title == "Stopped") {
-          buttonTemplate.className = "Start";
+          buttonTemplate.className = "Run";
           buttonTemplate.title = "Start";
         }
 
