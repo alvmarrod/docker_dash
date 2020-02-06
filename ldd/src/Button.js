@@ -36,30 +36,38 @@ class Button extends React.Component{
 
     launchFunction(){
 
+        // URL and Request setup
         var apiQueryURL = "";
         var apiQuerySettings = {};
 
+        // apiQuerySettings['mode'] = 'no-cors'
+        // apiQuerySettings['headers'] =
+        // apiQuerySettings['headers'] =
+        apiQuerySettings['headers'] = {
+            'Content-Type': 'application/json'
+        };
+
+        // Body setup
         var body = {};
+
         body['id'] = this.props.itemID;
 
         switch (this.props.apiQuery) {
             case "StartContainer":
                 apiQueryURL = "http://10.20.30.54:8000//containers/" + this.props.itemID;
                 apiQuerySettings['method'] = 'PUT';
-                apiQuerySettings['headers'] = {
-                    'Content-Type': 'application/json'
-                };
+                
                 body['action'] = 'Start';
                 apiQuerySettings['body'] = JSON.stringify(body);
+
                 break;
             case "StopContainer":
                 apiQueryURL = "http://10.20.30.54:8000//containers/" + this.props.itemID;
                 apiQuerySettings['method'] = 'PUT';
-                apiQuerySettings['headers'] = {
-                    'Content-Type': 'application/json'
-                };
+
                 body['action'] = 'Stop';
                 apiQuerySettings['body'] = JSON.stringify(body);
+
                 break;
             case "RunImage":
                 apiQueryURL = "http://10.20.30.54:8000/runningcontainers";
