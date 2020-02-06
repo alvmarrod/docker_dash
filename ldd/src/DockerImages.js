@@ -4,15 +4,15 @@ import DockerImage from './DockerImage';
 import './Module.css';
 import docker_logo from './Moby-logo.png';
 
-class ExistingImages extends React.Component{
+class DockerImages extends React.Component{
       
   renderImages(){
 
-    var DockerImages = this.props.images.map( (val, index) => {
+    var DockerImagesInstances = this.props.images.map( (val, index) => {
       return <DockerImage key={"DockerImage_" + index} image={val} />
     });
 
-    return DockerImages;
+    return DockerImagesInstances;
 
   }
 
@@ -50,4 +50,4 @@ class ExistingImages extends React.Component{
   }
 }
 
-export default ExistingImages;
+export default DockerImages;

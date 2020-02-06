@@ -1,24 +1,31 @@
 import React from 'react';
-import Button from './Button';
 import DockerContainer from './DockerContainer';
 
 import './Module.css';
 import docker_logo from './Moby-logo.png';
 
-class StoppedContainers extends React.Component {
+class DockerContainers extends React.Component {
 
   renderContainers() {
 
-    var DockerContainers = [];
+    var DockerContainersInstances = [];
 
-    if (this.props.containers != null) {  
-      DockerContainers = this.props.containers.map((val, index) => {
-        const buttonTemplate = {className: "Run", title: "Run"};
-        return <DockerContainer key={"StoppedDockerContainer_" + index} container={val} button={buttonTemplate} />
+    if (this.props.containers != null) {
+
+      DockerContainersInstances = this.props.containers.map((val, index) => {
+
+        const buttonTemplate = { className: "Stop", title: "Stop" };
+        if (this.props.title == "Stopped") {
+          buttonTemplate.className = "Start";
+          buttonTemplate.title = "Start";
+        }
+
+        return <DockerContainer key={this.props.title + "_DC_" + index} container={val} button={buttonTemplate} />
+
       });
     }
 
-    return DockerContainers;
+    return DockerContainersInstances;
 
   }
 
@@ -29,7 +36,7 @@ class StoppedContainers extends React.Component {
         <header className="Module-header">
           <span className="Module-title">
             <img src={docker_logo} className="Module-logo" alt="logo" />
-            Stopped Containers
+            {this.props.title} Containers
           </span>
           <br />
           <div className="Table-Wrapper">
@@ -58,4 +65,4 @@ class StoppedContainers extends React.Component {
   }
 }
 
-export default StoppedContainers;
+export default DockerContainers;
