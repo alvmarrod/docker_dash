@@ -17,3 +17,13 @@ go run main.go restapi.go external.go log.go docker.go aux.go
 ```
 npm start
 ```
+
+## Dependencies
+
+### GO Dependencies
+
+* [Gorilla/Mux](https://github.com/gorilla/mux)
+
+### React Dependencies
+
+* [React-Switch](https://www.npmjs.com/package/react-switch)
