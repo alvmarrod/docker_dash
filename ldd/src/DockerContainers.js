@@ -1,10 +1,27 @@
 import React from 'react';
+import Switch from "react-switch";
 import DockerContainer from './DockerContainer';
 
 import './Module.css';
 import docker_logo from './Moby-logo.png';
 
 class DockerContainers extends React.Component {
+
+  constructor(props) {
+
+    super(props);
+
+    this.state = { 
+      checked: true
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+
+  }
+
+  handleChange(checked) {
+    this.setState({ checked });
+  }
 
   renderContainers() {
 
@@ -39,6 +56,10 @@ class DockerContainers extends React.Component {
             {this.props.title} Containers
           </span>
           <br />
+          <span>
+            <span>Show containers without name</span>
+            <Switch onChange={this.handleChange} checked={this.state.checked} />
+          </span>
           <div className="Table-Wrapper">
             <table>
               <thead>
