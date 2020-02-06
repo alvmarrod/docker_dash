@@ -8,6 +8,12 @@ import (
 	"github.com/gorilla/mux"
 )
 
+/* Types definition */
+type DockerContainerAction struct {
+	ID     string `json:"id"`
+	Action string `json:"action"`
+}
+
 /* Cors - Should disable on production*/
 func enableCors(w *http.ResponseWriter) {
 	(*w).Header().Set("Access-Control-Allow-Origin", "*")
@@ -143,28 +149,36 @@ func reqUpdateImage(w http.ResponseWriter, r *http.Request) {
 
 }
 
+// reqUpdateContainer Receives a Docker Container update and triggers it
 func reqUpdateContainer(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	enableCors(&w)
-	params := mux.Vars(r)
+	// params := mux.Vars(r)
 	answer := lddOperationResponse{Status: "ERROR", Message: "Container not updated!"}
 
-	for index, item := range containers {
-		if item.ID == params["id"] {
+	var receivedAction DockerContainerAction
+	err := json.NewDecoder(r.Body).Decode(&receivedAction)
 
-			// containers = append(containers[:index], containers[index+1:]...)
-			var container DockerContainer
-			err := json.NewDecoder(r.Body).Decode(&container)
-
-			if err == nil {
-				containers[index] = container
-				answer = lddOperationResponse{Status: "OK", Message: "Container updated!"}
-			}
-
-			break
-
-		}
+	if err == nil {
+		executeContainerAction(receivedAction.ID, receivedAction.Action)
+		answer = lddOperationResponse{Status: "OK", Message: "Container updated!"}
 	}
+
+	// for index, item := range containers {
+	// 	if item.ID == params["id"] {
+
+	// var container DockerContainer
+	// err := json.NewDecoder(r.Body).Decode(&container)
+
+	// if err == nil {
+	// 	containers[index] = container
+	//  answer = lddOperationResponse{Status: "OK", Message: "Container updated!"}
+	// }
+
+	// 		break
+
+	// 	}
+	// }
 
 	json.NewEncoder(w).Encode(answer)
 
@@ -218,7 +232,7 @@ func runAPI() {
 	router.HandleFunc("/stoppedcontainers", reqGetStoppedDockerContainers).Methods("GET")
 	router.HandleFunc("/runningcontainers", reqGetRunningDockerContainers).Methods("GET")
 
-	/* Get specific item */
+	/* Get specific item - Not really needed */
 	router.HandleFunc("/images/{id}", reqGetImage).Methods("GET")
 	router.HandleFunc("/containers/{id}", reqGetDockerContainer).Methods("GET")
 
