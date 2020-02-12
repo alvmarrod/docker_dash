@@ -12,15 +12,34 @@ class DockerContainers extends React.Component {
     super(props);
 
     this.state = { 
-      checked: true
+      show_creation_date: true
     };
 
     this.handleChange = this.handleChange.bind(this);
 
   }
 
-  handleChange(checked) {
-    this.setState({ checked });
+  handleChange(show_cdate) {
+    this.setState({ 
+      show_creation_date: show_cdate
+    });
+  }
+
+  renderConditionalColumn(col_name) {
+
+    switch (col_name) {
+      case "Created":
+
+        if (this.state.show_creation_date)
+        {
+          
+          return <th>Created</th>
+        }
+        break;
+      default:
+        
+    }
+
   }
 
   renderContainers() {
@@ -37,7 +56,10 @@ class DockerContainers extends React.Component {
           buttonTemplate.title = "Start";
         }
 
-        return <DockerContainer key={this.props.title + "_DC_" + index} container={val} button={buttonTemplate} />
+        return <DockerContainer key={this.props.title + "_DC_" + index} 
+                                container={val}
+                                button={buttonTemplate}
+                                show_cdate={this.state.show_creation_date} />
 
       });
     }
@@ -65,22 +87,22 @@ class DockerContainers extends React.Component {
         <div className="Module-body">
           <div className="Option">
             <span>
-              Show containers without name &nbsp;
+              Show creation date &nbsp;
               <Switch onChange={this.handleChange}
-                      checked={this.state.checked}
+                      checked={this.state.show_creation_date}
                       width={switchStyle.width}
                       height={switchStyle.height}/>
             </span>
           </div>
-          <div className="Table-Wrapper">
+          <div className="Div-Wrapper">
             <table>
               <thead>
-                <tr className="Table-header">
+                <tr className="Table-Header">
                   <th>Name</th>
-                  <th>Container ID</th>
+                  <th>ID</th>
                   <th>Image</th>
                   <th>CMD</th>
-                  <th>Created</th>
+                  {this.renderConditionalColumn("Created")}
                   <th>Status</th>
                   <th>Ports</th>
                   <th></th>
