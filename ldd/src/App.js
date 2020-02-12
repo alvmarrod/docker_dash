@@ -8,10 +8,11 @@ import DockerContainers from './DockerContainers';
 
 class App extends React.Component{
 
-  intervalID;
-
   constructor(props){
+
     super(props);
+
+    this.intervalID = null;
 
     this.state = {
       images: [],
@@ -51,7 +52,7 @@ class App extends React.Component{
   componentDidMount() {
     // First data fetch to populate the interface
     this.fetchAllData()
-    
+
     /*
       Now we need to make it run at a specified interval,
       bind the getData() call to `this`, and keep a reference
