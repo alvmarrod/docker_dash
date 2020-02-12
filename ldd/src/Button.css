@@ -5,9 +5,9 @@ button {
   font-size: 1.3vmin;
   
   border-radius: 8px;
-  padding: 0.3vmin;
+  /* padding: 0.3vmin;
   padding-left: 1vmin;
-  padding-right: 1vmin;
+  padding-right: 1vmin; */
 
   display: inline-block;
   text-align: center;
