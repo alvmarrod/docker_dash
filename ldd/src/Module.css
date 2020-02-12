@@ -11,10 +11,27 @@
 }
 
 /* Tables */
+
+table {
+  /* width: 70vw; */
+  background-color: #EEE;
+
+}
+
 table, th, td {
+
   border: 1px solid;
+  border-radius: 10px;
   border-color: white;
   border-collapse: collapse;
+
+  color: #333;
+  /* background-color: #DDD; */
+
+}
+
+table tr th {
+  font-weight: normal;
 }
 
 .Table-Wrapper {
@@ -33,11 +50,12 @@ table, th, td {
 }
 
 .Regular-Row {
-  font-size: calc(2vmin - 5px);
+  /* font-size: calc(1vmin + 5px); */
+  font-size: 13px;
 }
 
 .Regular-Row th {
-  padding: 0.3vmin;
+  padding: 0.4vmin;
   text-align: center;
 }
 
@@ -63,7 +81,8 @@ table, th, td {
 }
 
 .Module-header {
-  background-color: #282c34;
+  /* background-color: #282c34; */
+  /* background-color: #999; */
   height: 5vh;
   /* min-height: 5vh;
   max-height: 15vh; */
@@ -74,11 +93,11 @@ table, th, td {
   align-items: center;
   /* Make it start from the top */
   justify-content: middle;
-  color: white;
 }
 
 .Module-body {
-  background-color: #282c34;
+  /* background-color: #282c34; */
+  /* background-color: #999; */
   min-height: 0vh;
   max-height: 20vh;
   min-width: 30vw;
@@ -88,7 +107,6 @@ table, th, td {
   align-items: center;
   /* Make it start from the top */
   justify-content: middle;
-  color: white;
   overflow: auto;
 }
 

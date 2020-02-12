@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  font-family: 'Roboto', helvetica, arial, sans-serif;
 }
 
 .React-logo {
@@ -18,7 +19,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+    
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -26,7 +27,11 @@
   /* Make it start from the top */
   justify-content: top;
   font-size: calc(10px + 2vmin);
-  color: white;
+
+  /* color: white; */
+  /* background-color: #FFF; */
+  /* background-color: #282c34; */
+  
 }
 
 .link {
