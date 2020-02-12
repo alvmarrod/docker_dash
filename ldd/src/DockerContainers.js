@@ -94,7 +94,7 @@ class DockerContainers extends React.Component {
                       height={switchStyle.height}/>
             </span>
           </div>
-          <div className="Div-Wrapper">
+          <div className="Table-Wrapper">
             <table>
               <thead>
                 <tr className="Table-Header">

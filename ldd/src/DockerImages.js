@@ -62,7 +62,7 @@ class DockerImages extends React.Component{
           <div className="Table-Wrapper">
             <table>
               <thead>
-                <tr className="Table-header">
+                <tr className="Table-Header">
                   <th>Repository</th>
                   <th>TAG</th>
                   <th>Image ID</th>

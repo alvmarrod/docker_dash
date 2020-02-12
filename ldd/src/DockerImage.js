@@ -13,7 +13,10 @@ class DockerImage extends React.Component{
                 <th>{this.props.image.id}</th>
                 <th>{this.props.image.created}</th>
                 <th>{this.props.image.size}</th>
-                <th><Button title="Run" className="Run" /><Button title="X" className="Stop" /></th>
+                <th><Button title="Run" 
+                            className="Run" />
+                    <Button title="X" 
+                            className="Stop" /></th>
             </tr>
         )
 
