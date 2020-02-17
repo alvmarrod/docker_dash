@@ -26,21 +26,21 @@ class App extends React.Component{
 
     // fetch('http://172.17.0.3:8000/images')
     // fetch('http://172.17.0.1:8000/images')
-    fetch('http://10.20.30.54:8000/images')
+    fetch('http://localhost:8000/images')
     .then(res => res.json())
     .then((data) => {
       this.setState({ images: data })
     })
     .catch(console.log)
 
-    fetch('http://10.20.30.54:8000/runningcontainers')
+    fetch('http://localhost:8000/runningcontainers')
     .then(res => res.json())
     .then((data) => {
       this.setState({ runningcontainers: data })
     })
     .catch(console.log)
 
-    fetch('http://10.20.30.54:8000/stoppedcontainers')
+    fetch('http://localhost:8000/stoppedcontainers')
     .then(res => res.json())
     .then((data) => {
       this.setState({ stoppedcontainers: data })
