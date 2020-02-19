@@ -1,10 +1,13 @@
 import './css/App.css';
+import './css/Module.css';
+import './css/Button.css';
+
 import React from 'react';
 import logo from './resources/react_logo.svg';
 
 import Others from './components/Others';
 import DockerImages from './DockerImages';
-import DockerContainers from './DockerContainers';
+import DCTableContainer from './containers/DCTableContainer';
 
 class App extends React.Component{
 
@@ -72,9 +75,9 @@ class App extends React.Component{
             <img src={logo} className="React-logo" alt="logo" />
             Local Docker Dashboard
           </span>
-          <DockerContainers title="Running" containers={this.state.runningcontainers}/>
+          <DCTableContainer title="Running" containers={this.state.runningcontainers}/>
           <br/>
-          <DockerContainers title="Stopped" containers={this.state.stoppedcontainers}/>
+          <DCTableContainer title="Stopped" containers={this.state.stoppedcontainers}/>
           <br/>
           <DockerImages images={this.state.images} />
           <br/>

@@ -1,7 +1,5 @@
 import React from 'react';
 
-import '../css/Button.css';
-
 export const Button = (props) => {
 
     return (
