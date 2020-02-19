@@ -1,8 +1,8 @@
-import './App.css';
+import './css/App.css';
 import React from 'react';
-import logo from './logo.svg';
+import logo from './resources/react_logo.svg';
 
-import Others from './Others';
+import Others from './components/Others';
 import DockerImages from './DockerImages';
 import DockerContainers from './DockerContainers';
 
@@ -24,8 +24,6 @@ class App extends React.Component{
 
   fetchAllData() {
 
-    // fetch('http://172.17.0.3:8000/images')
-    // fetch('http://172.17.0.1:8000/images')
     fetch('http://localhost:8000/images')
     .then(res => res.json())
     .then((data) => {

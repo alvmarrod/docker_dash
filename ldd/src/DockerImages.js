@@ -2,8 +2,8 @@ import React from 'react';
 import Switch from "react-switch";
 import DockerImage from './DockerImage';
 
-import './Module.css';
-import docker_logo from './Moby-logo.png';
+import './css/Module.css';
+import docker_logo from './resources/Moby-logo.png';
 
 class DockerImages extends React.Component{
 
