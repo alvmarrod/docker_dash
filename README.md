@@ -18,6 +18,18 @@ go run main.go restapi.go external.go log.go docker.go aux.go
 npm start
 ```
 
+## Design
+
+The ReactJS frontend has been designed using the following patterns:
+
+* Container Pattern - Separates logic from rendering
+* Stateless Functional Components - Render components are written as a function
+* ...
+
+The GO backend has been designed using the following patterns:
+
+* ...
+
 ## Dependencies
 
 ### GO Dependencies
