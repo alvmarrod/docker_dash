@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from './Button';
+import ButtonContainer from './containers/ButtonContainer';
 
 class DockerImage extends React.Component{
 
@@ -13,10 +13,10 @@ class DockerImage extends React.Component{
                 <th>{this.props.image.id}</th>
                 <th>{this.props.image.created}</th>
                 <th>{this.props.image.size}</th>
-                <th><Button title="Run" 
-                            className="Run" />
-                    <Button title="X" 
-                            className="Stop" /></th>
+                <th><ButtonContainer title="Run" 
+                                     className="Run" />
+                    <ButtonContainer title="X" 
+                                     className="Stop" /></th>
             </tr>
         )
 

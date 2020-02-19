@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from './Button';
+import ButtonContainer from './containers/ButtonContainer';
 
 class DockerContainer extends React.Component {
 
@@ -44,10 +44,10 @@ class DockerContainer extends React.Component {
         {this.renderConditionalColumn("Created")}
         <th>{this.props.container.status}</th>
         <th>{this.props.container.ports}</th>
-        <th><Button title={this.props.button["title"]}
-                    className={this.props.button["className"]}
-                    apiQuery={this.apiQueryForButton()}
-                    itemID={this.props.container.id} /></th>
+        <th><ButtonContainer title={this.props.button["title"]}
+                             className={this.props.button["className"]}
+                             apiQuery={this.apiQueryForButton()}
+                             itemID={this.props.container.id} /></th>
       </tr>
     )
 

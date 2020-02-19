@@ -1,8 +1,7 @@
 import React from 'react';
+import Button from '../components/Button';
 
-import './css/Button.css';
-
-class Button extends React.Component{
+class ButtonContainer extends React.Component{
 
     constructor(props){
 
@@ -40,9 +39,6 @@ class Button extends React.Component{
         var apiQueryURL = "";
         var apiQuerySettings = {};
 
-        // apiQuerySettings['mode'] = 'no-cors'
-        // apiQuerySettings['headers'] =
-        // apiQuerySettings['headers'] =
         apiQuerySettings['headers'] = {
             'Content-Type': 'application/json'
         };
@@ -94,13 +90,16 @@ class Button extends React.Component{
 
     render(){
 
-        return (
-            <button className={this.props.className} onClick={this.launchFunction}>
-                {this.props.title.toUpperCase()}
-            </button>
-        );
+        // return (
+        //     <button className={this.props.className} onClick={this.launchFunction}>
+        //         {this.props.title.toUpperCase()}
+        //     </button>
+        // );
+        return <Button className={this.props.className}
+                       launchFunction={this.launchFunction}
+                       text={this.props.title.toUpperCase()} />;
 
     }
 }
 
-export default Button;
+export default ButtonContainer;
