@@ -1,6 +1,6 @@
 import React from 'react';
 import Switch from "react-switch";
-import DockerContainer from './DockerContainer';
+import DCRowContainer from './containers/DCRowContainer';
 
 import './css/Module.css';
 import docker_logo from './resources/Moby-logo.png';
@@ -56,7 +56,7 @@ class DockerContainers extends React.Component {
           buttonTemplate.title = "Start";
         }
 
-        return <DockerContainer key={this.props.title + "_DC_" + index} 
+        return <DCRowContainer  key={this.props.title + "_DC_" + index} 
                                 container={val}
                                 button={buttonTemplate}
                                 show_cdate={this.state.show_creation_date} />
